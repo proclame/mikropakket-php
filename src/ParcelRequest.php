@@ -6,7 +6,7 @@ use Exception;
 class ParcelRequest
 {
     private array $attributes = [];
-    private int $paper_size = PaperSize::A6;
+    private int $paper_size = Papersize::A6;
     private string $api_key;
 
     private string $testing_endpoint = "https://mpws.mikropakket.nl:9220/";
