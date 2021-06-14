@@ -1,0 +1,25 @@
+{
+  "name": "proclame/mikropakket-php",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Nick Mispoulier",
+      "email": "nick@proclame.be"
+    }
+  ],
+  "require": {
+    "php": "^7.4|^8.0",
+    "guzzlehttp/guzzle": "^6.2.1|^7.0",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest"
+  },
+  "autoload": {
+    "psr-4": {
+      "Mikropakket\\": "src/"
+    }
+  }
+}
