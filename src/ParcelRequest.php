@@ -17,7 +17,7 @@ class ParcelRequest
 
 
     protected array $required = ['SendersCountryCode','MPCustomerNumber','SendersName','SendersStreet','SendersHouseNumber','SendersZipcode','SendersCity','ReceiversName','ReceiversStreet','ReceiversHouseNumber','ReceiversZipcode','ReceiversCity','ReceiversCountryCode'];
-    protected array $optional = ['ParcelNumber','ReceiversPhoneNumber','ReceiversAcceptant','DeliveryNote','CashDeliveryInCents','CashDeliveryReference','DeliveryTimeWindow','PickUpDate','AlsoSaturday','CreateRetourLabel'];
+    protected array $optional = ['ParcelNumber','SendersPhoneNumber','ReceiversPhoneNumber','ReceiversAcceptant','DeliveryNote','CashDeliveryInCents','CashDeliveryReference','DeliveryTimeWindow','PickUpDate','AlsoSaturday','CreateRetourLabel', 'PickupType', 'Reference', 'ReceiversEmail', 'ReceiversNote', 'SendersNote'];
 
 
     public function setApiKey($api_key, bool $isProduction = false): void
