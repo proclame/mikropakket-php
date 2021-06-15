@@ -1,0 +1,12 @@
+# OS
+*.DS_Store
+
+# IDE
+.idea
+
+# PHP / Composer
+vendor
+composer.lock
+
+# WIP
+index.php
