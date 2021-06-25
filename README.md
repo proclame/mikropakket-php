@@ -18,6 +18,12 @@ You can install the package via composer:
 composer require proclame/mikropakket-php
 ```
 
+## Notes
+* Each service requires it's own API Key
+* There are separate endpoints for Testing, and Production Countries per Service
+* The use of the Preadvice Webservice is unclear / unnecessary and therefore unimplemented
+
+
 ## Usage
 
 ```php
@@ -27,10 +33,23 @@ $request->setApiKey(API_KEY);
 $request->setAttributes($attributes = ["attribute_key" => "attribute_value"]);
 $labelResponse = $request->request();
 
-$labelResponse->shipmentParcel->stream("optional-filename.pdf");
+$labelResponse->shipmentParcel->stream("optional-filename.pdf"); // ->download() can be used as well
 ```
 
-### Attributes
+### Endpoint Hosts
+Service | Test | Netherlands | Belgium
+--- | --- | --- | ---
+ParcelLabel | https://mpws.mikropakket.nl:9220 | https://mpws.mikropakket.nl:9200 | ?
+ParcelStatus | https://mpws.mikropakket.nl:8901 | https://mpws.mikropakket.nl:8901 | https://www.mikropakket.be:8901
+
+### Endpoints *info for contributors*
+Service | Endpoint | Usage
+--- | --- | ---
+ParcelLabel | POST /mikropakketparcellabel/api/v1-1/parcel-label/{pagesize} | pagesize => 1: A6, 2: A5, 3: A4 (1 label per page)<br> Create a new Parcel Label
+ParcelStatus | GET /ParcelStatusService/api/v1-0/Get/Status<br>POST /ParcelStatusService/api/v1-0/Post/Status | Get status (tracking) of a parcel, use either Reference or ParcelNumber + Postal Code  
+ParcelStatus | GET /ParcelStatusService/api/v1-0/Get/Signature <br>POST /ParcelStatusService/api/v1-0/Post/Signature | Get signature of a delivered parcel, use ParcelNumber + Postal Code 
+
+### ParcelLabel Attributes
 Key | Required | Example | Default | Description
 --- | --- | --- | --- | ---
 SendersCountryCode | * | "BE" | | Countrycode from sender in isocode-1366 format
@@ -55,7 +74,6 @@ CashDeliveryInCents | | | | Not sure this is supported in BE
 CashDeliveryReference | | | | Not sure this is supported in BE
 DeliveryTimeWindow | | | | Timewindow for delivery on time in iso8601 format
 PickUpDate | | | | Date of pick up at senders location
-AlsoSaturday | | 1 | 0 | Also enable delivery on Saturday
 CreateRetourLabel | | 1 | 0 | Create return label as  well 
 PickupType | | | | Unsure
 Reference | | "order-number" | | Reference for the order 
@@ -63,33 +81,23 @@ ReceiversEmail | | "receiver@email.com" | | Receivers Email address (for notific
 SendersEmail | | "sender@email.com" | | Senders Email address
 ReceiversNote | | | | Unsure
 SendersNote | | | | Unsure
+*AlsoSaturday* | |  | | Not used anymore
 
-[comment]: <> (## Testing)
-
-[comment]: <> (```bash)
-
-[comment]: <> (composer test)
-
-[comment]: <> (```)
+## Testing
+* @todo: Add tests
 
 [comment]: <> (## Changelog)
 
 [comment]: <> (Please see [CHANGELOG]&#40;CHANGELOG.md&#41; for more information on what has changed recently.)
 
-[comment]: <> (## Contributing)
+## Contributing
+Feel free to contribute by Forking the repo and submitting a pull request.
 
-[comment]: <> (Please see [CONTRIBUTING]&#40;.github/CONTRIBUTING.md&#41; for details.)
+## Security Vulnerabilities
+Please submit security vulnerabilities by email to nick@proclame.be
 
-[comment]: <> (## Security Vulnerabilities)
-
-[comment]: <> (Please review [our security policy]&#40;../../security/policy&#41; on how to report security vulnerabilities.)
-
-[comment]: <> (## Credits)
-
-[comment]: <> (- [:author_name]&#40;https://github.com/:author_username&#41;)
-
-[comment]: <> (- [All Contributors]&#40;../../contributors&#41;)
+## Author
+- [Nick Mispoulier](https://github.com/proclame)
 
 ## License
-
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
