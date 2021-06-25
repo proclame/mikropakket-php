@@ -1,4 +1,5 @@
 <?php
+
 namespace Mikropakket;
 
 class Parcel
@@ -6,7 +7,8 @@ class Parcel
     public string $parcelNumber;
     private string $PdfParcel;
 
-    public function __construct($parcelNumber, $PdfParcel){
+    public function __construct($parcelNumber, $PdfParcel)
+    {
         $this->parcelNumber = $parcelNumber;
         $this->PdfParcel = $PdfParcel;
     }
@@ -33,20 +35,21 @@ class Parcel
 
     public function stream($filename = 'mikropakket-label.pdf'): void
     {
-        header("Content-type:application/pdf");
-        header('Content-Disposition: inline; filename="' . $filename . '"');
+        header('Content-type:application/pdf');
+        header('Content-Disposition:inline;filename="'.$filename.'"');
         header('Content-Transfer-Encoding: binary');
         header('Accept-Ranges: bytes');
         echo $this->getLabel();
+
         exit;
     }
 
     public function download($filename = 'mikropakket-label.pdf'): void
     {
-        header("Content-type:application/pdf");
-        header("Content-Disposition:attachment;filename=$filename");
+        header('Content-type:application/pdf');
+        header('Content-Disposition:attachment;filename="'.$filename.'"');
         echo $this->getLabel();
+
         exit;
     }
-
 }

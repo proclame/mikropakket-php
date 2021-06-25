@@ -1,4 +1,5 @@
 <?php
+
 namespace Mikropakket;
 
 use Exception;
@@ -37,9 +38,10 @@ class ParcelRequest
     {
         $this->attributes = array_filter($this->attributes, fn ($key) => in_array($key, [...$this->required, ...$this->optional], true), ARRAY_FILTER_USE_KEY);
     }
-    private function checkRequired(): bool {
-        foreach($this->required as $requiredAttribute){
-            if(!array_key_exists($requiredAttribute, $this->attributes)){
+    private function checkRequired(): bool
+    {
+        foreach ($this->required as $requiredAttribute) {
+            if (!array_key_exists($requiredAttribute, $this->attributes)) {
                 return false;
             }
         }
@@ -58,22 +60,25 @@ class ParcelRequest
 
 
 
-    public function request(){
-
-        if(!$this->checkRequired()){
+    public function request()
+    {
+        if (!$this->checkRequired()) {
             throw new Exception("Not all required attributes are set");
         }
 
         $json = json_encode($this->attributes, JSON_THROW_ON_ERROR);
 
-        $response = (new \GuzzleHttp\Client())->request('POST', $this->getApiEndpoint(),
+        $response = (new \GuzzleHttp\Client())->request(
+            'POST',
+            $this->getApiEndpoint(),
             [
                 'body' => $json,
                 'headers' => [
-                    'Content-Type'     => 'application/json',
-                    'X-ApiKey'      => $this->api_key,
+                    'Content-Type' => 'application/json',
+                    'X-ApiKey' => $this->api_key,
                 ]
-            ]);
+            ]
+        );
 
         return new ParcelResponse($response->getBody());
     }
