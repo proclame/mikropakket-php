@@ -19,9 +19,10 @@ composer require proclame/mikropakket-php
 ```
 
 ## Notes
-* Each service requires it's own API Key
-* There are separate endpoints for Testing, and Production Countries per Service
-* The use of the Preadvice Webservice is unclear / unnecessary and therefore unimplemented
+ * Each service requires it's own API Key
+ * ParcelLabelWebservice has a separate Testing endpoint
+ * ParcelStatusService has a separate endpoint for Belgium & Netherlands
+ * The use of the Preadvice Webservice is unclear / unnecessary and therefore unimplemented
 
 
 ## Usage
@@ -29,7 +30,7 @@ composer require proclame/mikropakket-php
 ```php
 // Create a parcel
 $request = new Mikropakket\ParcelRequest();
-$request->setApiKey(API_KEY);
+$request->setApiKey((string) API_KEY, (bool) $isProduction);
 $request->setAttributes($attributes = ["attribute_key" => "attribute_value"]);
 $labelResponse = $request->request();
 
@@ -39,10 +40,12 @@ $labelResponse->shipmentParcel->stream("optional-filename.pdf"); // ->download()
 ### Endpoint Hosts
 Service | Test | Netherlands | Belgium
 --- | --- | --- | ---
-ParcelLabel | https://mpws.mikropakket.nl:9220 | https://mpws.mikropakket.nl:9200 | ?
+ParcelLabel | https://mpws.mikropakket.nl:9220 | https://mpws.mikropakket.nl:9200 | https://mpws.mikropakket.nl:9200
 ParcelStatus | https://mpws.mikropakket.nl:8901 | https://mpws.mikropakket.nl:8901 | https://www.mikropakket.be:8901
 
-### Endpoints *info for contributors*
+### Endpoints 
+*info for contributors*
+
 Service | Endpoint | Usage
 --- | --- | ---
 ParcelLabel | POST /mikropakketparcellabel/api/v1-1/parcel-label/{pagesize} | pagesize => 1: A6, 2: A5, 3: A4 (1 label per page)<br> Create a new Parcel Label
